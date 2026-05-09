@@ -1,4 +1,4 @@
-package edu.prz.carservice.servicing.domain.request;
+package edu.prz.carservice.maintenance.domain.maintenanceorder;
 
 import edu.prz.carservice.foundation.domain.BaseEntity;
 import edu.prz.carservice.shared.identity.VehicleId;
@@ -10,7 +10,7 @@ import lombok.*;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Request extends BaseEntity {
+public class MaintenanceOrder extends BaseEntity {
 
   @AttributeOverride(name = "id", column = @Column(name = "vehicle_id"))
   VehicleId vehicleId;
