@@ -6,8 +6,8 @@ import lombok.EqualsAndHashCode;
 
 @MappedSuperclass
 @Data
-@EqualsAndHashCode(of = "id")
-public abstract class BaseEntity {
+@EqualsAndHashCode(of = "id", callSuper = false)
+public abstract class BaseEntity extends AuditableEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +16,4 @@ public abstract class BaseEntity {
   @Version
   private Integer version;
 
-  CreationInfo creation;
-  ModificationInfo modification;
 }

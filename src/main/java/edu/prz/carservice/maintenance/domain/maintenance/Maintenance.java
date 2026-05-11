@@ -13,8 +13,11 @@ import lombok.*;
 public class Maintenance extends BaseEntity {
 
   @AttributeOverride(name = "id", column = @Column(name = "maintenance_order_id"))
-  MaintenanceOrderId maintenanceOrder;
+  MaintenanceOrderId maintenanceOrderId;
 
   String description;
 
+  public void changeDescription(String description) {
+    this.description = description;
+  }
 }

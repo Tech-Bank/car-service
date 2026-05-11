@@ -17,4 +17,7 @@ public class MaintenanceOrder extends BaseEntity {
 
   String description;
 
+  public void changeDescription(String description) {
+    this.description = description;
+  }
 }

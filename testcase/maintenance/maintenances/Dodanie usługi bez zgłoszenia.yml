@@ -1,0 +1,21 @@
+info:
+  name: Dodanie usługi bez zgłoszenia
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{url}}/maintenance/maintenances"
+  body:
+    type: json
+    data: |-
+      {
+        "description": "Okresowa wymiana oleju"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

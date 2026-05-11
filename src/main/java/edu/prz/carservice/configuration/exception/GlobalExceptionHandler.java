@@ -1,8 +1,11 @@
-package edu.prz.carservice.configuration;
+package edu.prz.carservice.configuration.exception;
 
 import edu.prz.carservice.foundation.application.ProblemResponse;
+import edu.prz.carservice.foundation.domain.DomainException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ValidationException;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -14,6 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
   @Override
@@ -28,9 +32,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         .toList();
 
     ProblemResponse problemResponse = new ProblemResponse();
-    problemResponse.setTitle("validationFailed");
+    problemResponse.setType("validationFailed");
     problemResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-    problemResponse.setDetail("Request validation failed");
+    problemResponse.setTitle("Request validation failed");
     problemResponse.setViolations(violations);
 
     return handleExceptionInternal(ex, problemResponse, headers, HttpStatus.BAD_REQUEST, request);
@@ -40,21 +44,47 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   public ResponseEntity<Object> handle(EntityNotFoundException e, WebRequest request) {
 
     ProblemResponse problemResponse = new ProblemResponse();
-    problemResponse.setTitle("entityNotFound");
+    problemResponse.setType("entityNotFound");
     problemResponse.setStatus(HttpStatus.NOT_FOUND.value());
-    problemResponse.setDetail("Entity not found");
+    problemResponse.setTitle("Entity not found");
 
     return handleExceptionInternal(e, problemResponse, new HttpHeaders(), HttpStatus.NOT_FOUND,
+        request);
+  }
+
+  @ExceptionHandler(value = ValidationException.class)
+  public ResponseEntity<Object> handle(ValidationException e, WebRequest request) {
+
+    ProblemResponse problemResponse = new ProblemResponse();
+    problemResponse.setType("validationFailed");
+    problemResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+    problemResponse.setTitle("Validation failed");
+
+    return handleExceptionInternal(e, problemResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST,
+        request);
+  }
+
+  @ExceptionHandler(value = DomainException.class)
+  public ResponseEntity<Object> handle(DomainException e, WebRequest request) {
+
+    ProblemResponse problemResponse = new ProblemResponse();
+    problemResponse.setType("domainRuleBroken");
+    problemResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+    problemResponse.setTitle("Domain rule broken");
+
+    return handleExceptionInternal(e, problemResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST,
         request);
   }
 
   @ExceptionHandler(value = Exception.class)
   public ResponseEntity<Object> handle(Exception e, WebRequest request) {
 
+    log.error(e.getMessage(), e);
+
     ProblemResponse problemResponse = new ProblemResponse();
-    problemResponse.setTitle("serverError");
+    problemResponse.setType("serverError");
     problemResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-    problemResponse.setDetail("Server error");
+    problemResponse.setTitle("Server error");
 
     return handleExceptionInternal(e, problemResponse, new HttpHeaders(),
         HttpStatus.INTERNAL_SERVER_ERROR, request);

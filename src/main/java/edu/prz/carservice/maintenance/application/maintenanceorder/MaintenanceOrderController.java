@@ -1,5 +1,6 @@
 package edu.prz.carservice.maintenance.application.maintenanceorder;
 
+import edu.prz.carservice.foundation.application.BaseController;
 import edu.prz.carservice.maintenance.domain.maintenanceorder.MaintenanceOrder;
 import edu.prz.carservice.maintenance.domain.maintenanceorder.MaintenanceOrderRepository;
 import edu.prz.carservice.shared.identity.VehicleId;
@@ -17,13 +18,14 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "maintenance / maintenance-orders", description = "Maintenance orders")
 @RequestMapping("/api/maintenance/maintenance-orders")
 @RequiredArgsConstructor
-public class MaintenanceOrderController {
+public class MaintenanceOrderController extends BaseController {
 
   final MaintenanceOrderRepository maintenanceOrderRepository;
   final AddMaintenanceOrderUseCase addMaintenanceOrderUseCase;
   final ChangeMaintenanceOrderUseCase changeMaintenanceOrderUseCase;
 
-  public record AddMaintenanceOrderRequest(@NotNull VehicleId vehicleId, @NotBlank String description) {
+  public record AddMaintenanceOrderRequest(@NotNull VehicleId vehicleId,
+                                           @NotBlank String description) {
 
   }
 
@@ -38,7 +40,7 @@ public class MaintenanceOrderController {
     return ResponseEntity.ok(addMaintenanceOrderUseCase.execute(request));
   }
 
-  @PatchMapping("/{id}")
+  @PostMapping(_ID + "/change")
   public ResponseEntity<MaintenanceOrder> change(
       @PathVariable final Long id,
       @RequestBody @Valid final ChangeMaintenanceOrderRequest request) {
@@ -50,6 +52,15 @@ public class MaintenanceOrderController {
   public ResponseEntity<Page<MaintenanceOrder>> getAll(Pageable pageable) {
 
     return ResponseEntity.ok(maintenanceOrderRepository.findAll(pageable));
+  }
+
+  @GetMapping(_ID)
+  public ResponseEntity<MaintenanceOrder> getOne(
+      @PathVariable final Long id) {
+
+    return maintenanceOrderRepository.findById(id)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
   }
 
 }

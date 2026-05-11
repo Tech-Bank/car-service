@@ -18,10 +18,12 @@ public class ChangeMaintenanceOrderUseCase {
   @Transactional
   public MaintenanceOrder execute(Long id, ChangeMaintenanceOrderRequest request) {
 
-    val entity = maintenanceOrderRepository.findById(id)
+    val order = maintenanceOrderRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException(MaintenanceOrder.class.getName()));
 
-    return maintenanceOrderRepository.save(entity);
+    order.changeDescription(request.description());
+
+    return maintenanceOrderRepository.save(order);
   }
 
 }

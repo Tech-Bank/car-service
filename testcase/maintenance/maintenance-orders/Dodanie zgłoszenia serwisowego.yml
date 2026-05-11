@@ -1,0 +1,22 @@
+info:
+  name: Dodanie zgłoszenia serwisowego
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{url}}/maintenance/maintenance-orders"
+  body:
+    type: json
+    data: |-
+      {
+        "vehicleId": 1,
+        "description": "Wymiana oleju po 500 km"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

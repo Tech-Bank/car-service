@@ -1,0 +1,7 @@
+info:
+  name: maintenances
+  type: folder
+  seq: 2
+
+request:
+  auth: inherit
