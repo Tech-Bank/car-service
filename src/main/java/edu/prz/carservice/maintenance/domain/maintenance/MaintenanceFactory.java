@@ -2,7 +2,7 @@ package edu.prz.carservice.maintenance.domain.maintenance;
 
 import edu.prz.carservice.foundation.domain.StandardFactory;
 import edu.prz.carservice.maintenance.domain.maintenance.MaintenanceFactory.Input;
-import edu.prz.carservice.shared.identity.MaintenanceOrderId;
+import edu.prz.carservice.maintenance.domain.maintenanceorder.MaintenanceOrderId;
 import lombok.val;
 import org.springframework.stereotype.Component;
 

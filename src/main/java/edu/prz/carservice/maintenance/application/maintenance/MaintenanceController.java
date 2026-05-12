@@ -3,7 +3,7 @@ package edu.prz.carservice.maintenance.application.maintenance;
 import edu.prz.carservice.foundation.application.BaseController;
 import edu.prz.carservice.maintenance.domain.maintenance.Maintenance;
 import edu.prz.carservice.maintenance.domain.maintenance.MaintenanceRepository;
-import edu.prz.carservice.shared.identity.MaintenanceOrderId;
+import edu.prz.carservice.maintenance.domain.maintenanceorder.MaintenanceOrderId;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
