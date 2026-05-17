@@ -1,16 +1,17 @@
 info:
-  name: Modyfikacja zgłoszenia serwisowego
+  name: Rejestracja usługi (do zgłoszenia)
   type: http
-  seq: 1
+  seq: 2
 
 http:
   method: POST
-  url: "{{url}}/maintenance/maintenance-orders/{{order_id}}/change"
+  url: "{{url}}/maintenance/maintenances"
   body:
     type: json
     data: |-
       {
-        "description": "Wymiana oleju po 1000 km"
+        "maintenanceOrderId": 1,
+        "description": "Okresowa wymiana oleju wg zgłoszenia"
       }
   auth: inherit
 

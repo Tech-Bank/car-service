@@ -1,5 +1,5 @@
 info:
-  name: Pobranie listy zgłoszeń serwisowych
+  name: Pobranie listy zgłoszeń
   type: http
   seq: 1
 

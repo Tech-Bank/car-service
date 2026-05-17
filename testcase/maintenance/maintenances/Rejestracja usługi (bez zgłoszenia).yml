@@ -1,7 +1,7 @@
 info:
-  name: Dodanie usługi do zgłoszenia
+  name: Rejestracja usługi (bez zgłoszenia)
   type: http
-  seq: 2
+  seq: 1
 
 http:
   method: POST
@@ -10,8 +10,7 @@ http:
     type: json
     data: |-
       {
-        "maintenanceOrderId": 1,
-        "description": "Okresowa wymiana oleju wg zgłoszenia"
+        "description": "Okresowa wymiana oleju"
       }
   auth: inherit
 
